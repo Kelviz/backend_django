@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'cloudinary',
     'cloudinary_storage',
+    'ckeditor',
 ]
 
 MIDDLEWARE = [
@@ -71,6 +72,16 @@ TEMPLATES = [
 WSGI_APPLICATION = 'backend_django.wsgi.application'
 
 
+CKEDITOR_UPLOAD_PATH = "uploads/" 
+CKEDITOR_JQUERY_URL = 'https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js' 
+CKEDITOR_CONFIGS = {
+    'default': {
+        'toolbar': 'Custom', 
+        'height': 300, 
+    }
+}
+
+
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
@@ -80,6 +91,9 @@ WSGI_APPLICATION = 'backend_django.wsgi.application'
 #        'NAME': BASE_DIR / 'db.sqlite3',
 #    }
 #}
+
+
+
 
 
 DATABASES = {
