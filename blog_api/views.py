@@ -5,7 +5,7 @@ from rest_framework.pagination import PageNumberPagination
 from rest_framework.response import Response
 from .models import Post, Category, Comment
 from .forms import CommentForm
-from .serializers import PostSerializer,  CommentSerializer
+from .serializers import PostSerializer, CategorySerializer, CommentSerializer
 
 # Create your views here.
 
@@ -46,7 +46,11 @@ class FeaturedPostViewSet(viewsets.ModelViewSet):
     serializer_class = PostSerializer
 
 
-
+class CategoryViewSet(viewsets.ModelViewSet):
+    queryset = Category.objects.all()
+    for se in queryset:
+        print(f'{se.name} - {se.id}')
+    serializer_class = CategorySerializer
 
 
 # class CategoryPostsPageViewSet(viewsets.ModelViewSet):
@@ -64,6 +68,23 @@ class FeaturedPostViewSet(viewsets.ModelViewSet):
     # return Response(serializer.data)
 
 
+class CategoryPostsPageViewSet(viewsets.ModelViewSet):
+    serializer_class = PostSerializer
+    queryset = Post.objects.all()
+    pagination_class = CustomPagination
+
+    def get_queryset(self):
+        category_id = self.kwargs.get('pk')
+        queryset = super().get_queryset().filter(category=category_id)
+        print(queryset)
+        return queryset
+
+    def retrieve(self, request, pk=None):
+        queryset = self.get_queryset()
+        serializer = self.get_serializer(queryset, many=True)
+        page = self.paginate_queryset(serializer.data)
+        category_post = self.get_paginated_response(page)
+        return category_post
 
 
 class CommentViewSet(viewsets.ModelViewSet):
