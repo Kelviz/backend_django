@@ -4,6 +4,13 @@ from .models import Post, Category, Comment
 
 class PostSerializer(serializers.ModelSerializer):
     author_username = serializers.ReadOnlyField(source='author.username')
+    image = serializers.SerializerMethodField()
+
+    def get_image(self, post):
+        if post.image:
+            return post.image.url
+        return None
+
 
     class Meta:
         model = Post
