@@ -81,20 +81,6 @@ WSGI_APPLICATION = 'backend_django.wsgi.application'
 #    }
 #}
 
-"""
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'URL': 'postgresql://postgres:eRHy6FkWbOuYFwwolOVz@containers-us-west-74.railway.app:7910/railway',
-        'NAME': 'railway',
-        'USER': 'postgres',
-        'PASSWORD': 'eRHy6FkWbOuYFwwolOVz',
-        'HOST': 'containers-us-west-74.railway.app',
-        'PORT': 7910,
-    }
-}
-
-"""
 
 DATABASES = {
     'default': {
@@ -154,6 +140,9 @@ STATICFILES_DIRS = os.path.join(BASE_DIR, 'static'),
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
 
 REST_FRAMEWORK = {
