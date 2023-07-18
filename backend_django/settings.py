@@ -1,5 +1,11 @@
 
 from pathlib import Path
+import cloudinary
+import cloudinary_storage
+import dotenv
+from dotenv import load_dotenv
+load_dotenv()
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -9,7 +15,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-zph!b+6pvmcf--eij%tg&nrhdnaplwae7z-@4v+wo6rb*=2d&l'
+SECRET_KEY = os.getenv('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -29,6 +35,8 @@ INSTALLED_APPS = [
     'blog_api',
     "corsheaders",
     'rest_framework',
+    'cloudinary',
+    'cloudinary_storage',
 ]
 
 MIDDLEWARE = [
@@ -73,6 +81,7 @@ WSGI_APPLICATION = 'backend_django.wsgi.application'
 #    }
 #}
 
+"""
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
@@ -83,6 +92,22 @@ DATABASES = {
         'HOST': 'containers-us-west-74.railway.app',
         'PORT': 7910,
     }
+}
+
+"""
+
+DATABASES = {
+    'default': {
+        'ENGINE': os.getenv('HOST_ENGINE'),
+        'URL': os.getenv('DB_URL'),
+        'HOST': os.getenv('DB_HOST'),
+        'NAME': os.getenv('DB_NAME'),
+        'USER': os.getenv('DE_USER'),
+        'PASSWORD': os.getenv('DB_PASSWORD'),
+        'PORT': os.getenv('DB_PORT'),
+
+    }
+
 }
 
 
@@ -121,6 +146,9 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
 STATIC_URL = 'static/'
+MEDIA_URL = '/media/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles_build', 'static')
+STATICFILES_DIRS = os.path.join(BASE_DIR, 'static'),
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
@@ -140,5 +168,12 @@ REST_FRAMEWORK = {
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",
     "http://127.0.0.1:3000",
-    "https://django-r-blog.netlify.app/",
+    "https://django-r-blog.netlify.app",
 ]
+
+
+CLOUDINARY_STORAGE = {
+    'CLOUD_NAME': os.getenv('CLOUD_NAME'),
+    'API_KEY': os.getenv('CLOUD_API_KEY'),
+    "API_SECRET": os.getenv('CLOUD_API_SECRET'),
+}
