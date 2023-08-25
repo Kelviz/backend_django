@@ -3,6 +3,7 @@ from rest_framework import viewsets, pagination
 from rest_framework.decorators import action
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.response import Response
+from rest_framework import filters
 from .models import Post, Category, Comment
 from .forms import CommentForm
 from .serializers import PostSerializer, CategorySerializer, CommentSerializer
@@ -17,10 +18,12 @@ class CustomPagination(pagination.PageNumberPagination):
 
 
 class PostViewSet(viewsets.ModelViewSet):
+    search_fields = ['title', 'excerpt']
+    filter_backends = (filters.SearchFilter,)
     queryset = Post.objects.all()
     serializer_class = PostSerializer
     lookup_field = 'pk'
-    pagination_class = CustomPagination
+   
 
     @action(detail=True, methods=['GET'])
     def adjacent_posts(self, request, pk=None):
@@ -42,7 +45,7 @@ class PostViewSet(viewsets.ModelViewSet):
 
 
 class FeaturedPostViewSet(viewsets.ModelViewSet):
-    queryset = Post.objects.filter(featured=True)
+    queryset = Post.objects.filter(featured=True)[0:4]
     serializer_class = PostSerializer
 
 
@@ -71,7 +74,6 @@ class CategoryViewSet(viewsets.ModelViewSet):
 class CategoryPostsPageViewSet(viewsets.ModelViewSet):
     serializer_class = PostSerializer
     queryset = Post.objects.all()
-    pagination_class = CustomPagination
 
     def get_queryset(self):
         category_id = self.kwargs.get('pk')
@@ -82,9 +84,8 @@ class CategoryPostsPageViewSet(viewsets.ModelViewSet):
     def retrieve(self, request, pk=None):
         queryset = self.get_queryset()
         serializer = self.get_serializer(queryset, many=True)
-        page = self.paginate_queryset(serializer.data)
-        category_post = self.get_paginated_response(page)
-        return category_post
+ 
+        return Response(serializer.data)
 
 
 class CommentViewSet(viewsets.ModelViewSet):
