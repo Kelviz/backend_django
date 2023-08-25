@@ -85,30 +85,30 @@ CKEDITOR_CONFIGS = {
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
-DATABASES = {
-   'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
-}
-
-
-
-
-
 #DATABASES = {
-#    'default': {
- #       'ENGINE': os.getenv('HOST_ENGINE'),
- #       'URL': os.getenv('DB_URL'),
- #       'HOST': os.getenv('DB_HOST'),
- #       'NAME': os.getenv('DB_NAME'),
-  #      'USER': os.getenv('DE_USER'),
-  #      'PASSWORD': os.getenv('DB_PASSWORD'),
-   #     'PORT': os.getenv('DB_PORT'),
-
-   # }
-
+#   'default': {
+#        'ENGINE': 'django.db.backends.sqlite3',
+ #       'NAME': BASE_DIR / 'db.sqlite3',
+#    }
 #}
+
+
+
+
+
+DATABASES = {
+    'default': {
+        'ENGINE': os.getenv('HOST_ENGINE'),
+        'URL': os.getenv('DB_URL'),
+        'HOST': os.getenv('DB_HOST'),
+      'NAME': os.getenv('DB_NAME'),
+        'USER': os.getenv('DE_USER'),
+        'PASSWORD': os.getenv('DB_PASSWORD'),
+        'PORT': os.getenv('DB_PORT'),
+
+    }
+
+}
 
 
 # Password validation
@@ -173,7 +173,7 @@ CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",
     "http://127.0.0.1:3000",
    # "https://django-r-blog.netlify.app",
-   # "https://frontend-react-blog-lilac.vercel.app/",
+     "https://frontend-react-blog-lilac.vercel.app/",
    
 ]
 
