@@ -157,7 +157,7 @@ STATICFILES_DIRS = os.path.join(BASE_DIR, 'static'),
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
-#DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
 
 REST_FRAMEWORK = {
